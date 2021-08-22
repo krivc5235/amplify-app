@@ -24,12 +24,12 @@
                 <button class="btn btn-primary btn-sm btn-block" type="submit">Edit comment</button>
             </form>
         </div>
-        <div class="d-grid gap-2">
+        <div *ngIf="user" class="d-grid gap-2">
             <button class="btn btn-sm btn-primary" (click)="onReply()"> {{isReplying ? "Hide" : "Reply"}}</button>
         </div>
         
     </div>
-    <div *ngIf="isReplying">
+    <div *ngIf="isReplying && user">
         <form (ngSubmit)="onAddComment()">
             <label for="text" class="form-label">Comment</label>
             <input type="text" [(ngModel)]="text" class="form-control form-control-sm" required id="text" name="text">
