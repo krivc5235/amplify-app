@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-12 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-8"> 
+                        <h5 class="card-title">{{ blog.title }}</h5>
+                        <p class="card-text">{{ blog.text }}</p>
+                    </div>
+                    <div class="col-2">
+                        <a class="btn btn-primary" *ngIf="user && user.id === blog.author_id" routerLink="edit">Edit blog</a>
+                    </div>
+                    <div class="col-2">
+                        <a class="btn btn-danger" *ngIf="user && user.id === blog.author_id" (click)="onDeleteBlog()">Delete blog</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="user" class="card mt-3">
+            <div class="row">
+                <h4>Add Comment</h4>
+                <form class="form-inline" (ngSubmit)="onSubmitComment()">
+                    <div class="form-group" >
+                        <label for="comment" class="form-label">Comment</label>
+                        <input type="text" [(ngModel)]="comment" class="form-control form-control-sm" id="comment" name="comment">
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-sm btn-primary" type="submit">Add a comment</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+       
+        <div class="card mt-3">
+            <div class="row">
+                <div class="col-12">
+                    <app-comment *ngFor="let comment of blog.comments" [comment]="comment" [user]="user"></app-comment>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

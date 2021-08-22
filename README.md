@@ -1,27 +1,3 @@
-# AmplifyApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
+Pred začetkom projekta sem skozi CLI s pomočjo npm naložil amplify. Nastavil sem nastavitve amplifya z ukazom amplify configure, nato pa začel nov projekt z amplify init. Sprva sem dodal Cognito za avtentikacijo z ukazom amplify auth add. Pri avtentikaciji sem dobil error: AuthError - Error: Amplify has not been configured correctly, čeprav sem pravilno nastavil konfiguracijo. Poskusil sem spremeniti aws-exports.js v aws-exports.ts in z nekaj drugimi rešitvami, vendar neuspešno, zato sem v main.ts dodal lastno konfiguracijo Auth-a. S pomočjo ukaza amplify hosting add sem nato izgradil server. API sem zgradil z ukazom amplify api add, kjer sem nato dodal poti /blogs/{id}/comments/{comment_id}, kjer sem za bloge in komentarje ločil lambda funkciji. Funkcije sem izgradil v jeziku Node.js. Ustvaril sem novo tabelo, kjer je bil ključ sestavljen iz dveh delov. V tabelo sem shranjeval bloge z istim partition in sort ključem z začetnico BLOG-, partition ključ komentarjev je bil identifikacijska številka bloga, sort ključ pa id. številka komentarja. Za vsak komentar sem shranil tudi vrsto staršev (komentarjev). Všečki so imeli za partition ključ id komentarja, sort ključ pa je bil sestavljen iz predpone LIKE-/DISL- in nato id uporabnika. Naletel sem na težavo z glavo CORS, ki sem jo uspel odstraniti preko aws konzole. Sprva sem večkrat popravil napake, a sem pozabil nov API tudi deployati. Sprva sem spisal lambda funkciji za pridobivanje in objavljanje blogov. Nato sem se sestavil frontend. V frontendu sem sestavil APIservice, BlogsService in AuthService, ki skrbijo za pravilno prenašanje podatkov in delovanje aplikacije. Ob posodabljanju lambda funkcij sem naletel na [naslednji eror](./error.JPG). Zanj sem porabil skoraj dva dni, kjer sem se igral z nastavitvami VPC serverjev in NAT gateway ter poskušal z brisanjem API-ja ter funkcij in s ponovnim začetkom. Na koncu je bil kriv pokvarjen modem, saj sem preko povezave mobile hotspot uspel z ukazom amplify push v nekaterih poskusih (slab signal) naložiti podatke na server. Zato sem moral ponovni API izgraditi s pomočjo spletne aws konzole in ga tako tudi ročno konfigurirati v main.ts, funkcije pa preko lambda konzole. Pri lambda funkcijah sem moral uporabiti tudi mapping vhodov namesto proxya, saj sem kljub vračanju podatkov v obliki { "isBase64Encoded": true|false, "statusCode": httpStatusCode, "headers": { "headerName": "headerValue", ... }, "body": "..."} dobil error malformed Lambda proxy response. Zgradil sem več ločenih funkcij, katerim sem dodal pravilne Policy-je za dodajanje/branje/odstranjevanje iz baze. Funkcije sem dodal v mapo Lambde, da si jih lahko ogledate. Nekaj težav sem imel tudi z ukazom publish. Sprva je vračal isti Timeout error, ki je opisan zgoraj, nato pa je naložil aplikacijo brez errorjev, vendarni posodobil frontenda. Po ponovnem klicu publish čez nekaj časa, se je pravilno naložil tudi frontend. Aplikacija je dostopna na linku: https://d2b06bf5ewuib7.cloudfront.net
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

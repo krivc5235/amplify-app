@@ -1,0 +1,45 @@
+<div class="col-12">
+    <div class="card">
+        <div class="row">
+            <div class="col 8">
+                <h5>
+                    {{ comment.username }}
+                </h5>
+                <p>
+                    {{ comment.text }}
+                </p>
+                <h6 class="card-subtitle mb-2 text-muted">{{comment.likes}} likes, {{comment.dislikes}} dislikes</h6>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-success" *ngIf="user" (click)="onLike()"> {{isLiked() ? "Unlike" : "Like" }}</button>
+                <button class="btn btn-danger" *ngIf="user" (click)="onDislike()">{{isDisliked() ? "Undislike" : "Disike" }}</button>
+                <button class="btn btn-warning" *ngIf="user && user.id === comment.user_id" (click)="onEdit()">Edit</button>
+                <button class="btn btn-danger"  *ngIf="user && user.id === comment.user_id && comment.comments.length === 0" (click)="onDeleteComment()">Delete</button>
+            </div>
+        </div>
+        <div *ngIf="isEdit">
+            <form (ngSubmit)="onEditComment()">
+                <label for="text" class="form-label">Comment</label>
+                <input type="text" [(ngModel)]="editText" class="form-control form-control-sm" id="text" required name="text">
+                <button class="btn btn-primary btn-sm btn-block" type="submit">Edit comment</button>
+            </form>
+        </div>
+        <div class="d-grid gap-2">
+            <button class="btn btn-sm btn-primary" (click)="onReply()"> {{isReplying ? "Hide" : "Reply"}}</button>
+        </div>
+        
+    </div>
+    <div *ngIf="isReplying">
+        <form (ngSubmit)="onAddComment()">
+            <label for="text" class="form-label">Comment</label>
+            <input type="text" [(ngModel)]="text" class="form-control form-control-sm" required id="text" name="text">
+            <button class="btn btn-primary btn-sm btn-block" type="submit">Add comment</button>
+        </form>
+    </div>
+    <div class="row justify-content-right">
+        <div class="col-1"></div>
+        <div class="col-11">
+            <app-comment *ngFor="let c of comment.comments" [user]="user" [comment]="c"></app-comment>
+        </div>
+    </div>
+</div>

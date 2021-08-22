@@ -1,0 +1,15 @@
+<div class="row justify-content-md-center">
+    <div class="col-12 col-md-6">
+        <form (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" [(ngModel)]="title" class="form-control" id="title" required name="title">
+            </div>
+            <div class="mb-3">
+                <label for="text" class="form-label">Text</label>
+                <input type="text" [(ngModel)]="text" class="form-control" id="text" required name="text">
+            </div>
+            <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Edit' : 'Add'}} blog post</button>
+        </form>
+    </div>
+</div>
