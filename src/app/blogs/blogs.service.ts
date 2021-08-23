@@ -109,9 +109,7 @@ export class BlogsService {
             
             console.log(index);
             coms.splice(index, 1);
-        } else {
-            console.log("nekki ne stima");
-        }
+        } 
     }
 
     
