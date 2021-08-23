@@ -4,7 +4,6 @@ import { AuthComponent } from './auth/auth.component';
 import { BlogDetailsComponent } from './blogs/blog-details/blog-details.component';
 import { BlogListComponent } from './blogs/blog-list/blog-list.component';
 import { BlogsComponent } from './blogs/blogs.component';
-import { CommentEditComponent } from './blogs/comment/comment-edit/comment-edit.component';
 import { EditBlogComponent } from './blogs/edit-blog/edit-blog.component';
 
 const routes: Routes = [
@@ -34,14 +33,6 @@ const routes: Routes = [
         path: ':id',
         component: BlogDetailsComponent
 
-      },
-      {
-        path: ':id/comments/:comment_id/edit',
-        component: CommentEditComponent
-      },
-      {
-        path: ':id/comments/new',
-        component: CommentEditComponent
       }
 
     ]

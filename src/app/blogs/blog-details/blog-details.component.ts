@@ -80,15 +80,7 @@ export class BlogDetailsComponent implements OnInit, OnDestroy {
 
 
   }
-  /*
-  getCommentIndex(comments: Comment[], comment: Comment) {
-    let j = 0;
-    while (j < comments.length && comments[j].likesUsers.size -
-      comments[j].dislikesUsers.size > comment.likesUsers.size - comment.dislikesUsers.size) {
-      j++;
-    }
-    return j;
-  }*/
+  
 
   async onDeleteBlog() {
     this.APIservice.deleteBlog(this.blog.id).then(res => {

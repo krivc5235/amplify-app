@@ -1,6 +1,6 @@
-import { Inject, Injectable } from "@angular/core";
-import { Auth, Hub } from "aws-amplify";
-import { INJ_TOKEN } from "./storage";
+import { Injectable } from "@angular/core";
+import { Auth } from "aws-amplify";
+
 import { User } from "./user.model";
 
 
@@ -9,7 +9,6 @@ import { User } from "./user.model";
 //import { CognitoUser, CognitoUserAttribute, CognitoUserPool } from "@aws-amplify/auth";
 import { CognitoUser, CognitoUserAttribute, CognitoUserPool, AuthenticationDetails, CognitoUserSession } from "amazon-cognito-identity-js";
 import { BehaviorSubject } from "rxjs";
-import { Console } from "console";
 import { Router } from "@angular/router";
 
 const POOL_DATA = {
@@ -24,28 +23,8 @@ export class AuthService {
     userSubject = new BehaviorSubject<User | null>(null);
 
 
-    constructor(@Inject(INJ_TOKEN) private storage: Storage, private router: Router) {
-        Hub.listen("auth", (data) => {
-            switch (data.payload.event) {
-                case "signUp":
-                    console.log("signUp")
-                    break;
-                case "signedUp":
-                    console.log("working");
-                    break;
-                case "signIn":
-                    console.log("signIn")
-                    break;
-                case "signOut":
-                    console.log("signOut")
-                    break;
-                //case "cognitoHostedUI":
-                //  console.log("cognitoHostedUI");
-                //this.authenticateUser();
-                //break;
-
-            }
-        });
+    constructor(private router: Router) {
+      
     }
 
 
@@ -102,7 +81,7 @@ export class AuthService {
         let that = this;
         cognitoUser.authenticateUser(authDetails, {
             onSuccess(result: CognitoUserSession) {
-
+                that.authenticateUser();
             },
             onFailure(err) {
                 console.log(err);
@@ -154,19 +133,6 @@ export class AuthService {
                     } else {
                         this.userSubject.next(null);
                     }
-                }
-            })
-            user.getUserData((err, res) => {
-                if (err) {
-                    console.log("error")
-                    console.log(err)
-                }
-                if (res) {
-                    if (user) {
-
-                    }
-
-
                 }
             })
         } else {

@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from 'aws-amplify';
 import { AuthService } from './auth.service';
-import { INJ_TOKEN } from './storage';
 
 @Component({
   selector: 'app-auth',
@@ -40,10 +39,6 @@ export class AuthComponent{
       Auth.confirmSignUp(this.username, form.value.code);
       //await this.authService.authenticateUser();
       
-      
-      //let jwt = await Auth.currentSession();
-      //console.log(jwt);
-      //this.authService.setToken(jwt);
       this.router.navigate(['/']);
     } catch (error) {
       console.log('error confirming sign up', error);

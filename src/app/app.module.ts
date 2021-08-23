@@ -16,7 +16,6 @@ import { HeaderComponent } from './header/header.component';
 import { BlogDetailsComponent } from './blogs/blog-details/blog-details.component';
 import { BlogListComponent } from './blogs/blog-list/blog-list.component';
 import { CommentComponent } from './blogs/comment/comment.component';
-import { CommentEditComponent } from './blogs/comment/comment-edit/comment-edit.component';
 
 
 @NgModule({
@@ -29,8 +28,7 @@ import { CommentEditComponent } from './blogs/comment/comment-edit/comment-edit.
     HeaderComponent,
     BlogDetailsComponent,
     BlogListComponent,
-    CommentComponent,
-    CommentEditComponent
+    CommentComponent
   ],
   imports: [
     BrowserModule,
