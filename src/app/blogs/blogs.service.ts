@@ -94,7 +94,9 @@ export class BlogsService {
 
     deleteComment(blog_id: string, comment: Comment) {
         let blog = this.blogs.find(blog => blog.id === blog_id);
+      
         if(blog) {
+           
             let parentsArray = comment.parents;
             let parentComment: Comment | undefined;
             let coms: any = blog.comments;
@@ -103,7 +105,12 @@ export class BlogsService {
                 coms = parentComment?.comments
             }
             let removeIndex = coms.find((c: any) => c.id === comment.id);
-            coms.splice(removeIndex, 1);
+            let index = coms.indexOf(removeIndex);
+            
+            console.log(index);
+            coms.splice(index, 1);
+        } else {
+            console.log("nekki ne stima");
         }
     }
 

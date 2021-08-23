@@ -29,7 +29,7 @@ export class BlogDetailsComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private blogsService: BlogsService, private router: Router, private authService: AuthService, private APIservice: APIService) { }
 
-  async ngOnInit(){
+  async ngOnInit() {
     this.id = this.route.snapshot.params["id"];
     this.blog = (<Blog>this.blogsService.getBlog(this.id));
     this.subscription = this.route.params.subscribe(
@@ -44,7 +44,7 @@ export class BlogDetailsComponent implements OnInit, OnDestroy {
     //this.prepareBlogData()
     this.prepareCommentData();
   }
-  
+
 
 
   async prepareBlogData() {
@@ -53,37 +53,49 @@ export class BlogDetailsComponent implements OnInit, OnDestroy {
     });
     //console.log(data);
   }
-  
+
   async prepareCommentData() {
     const comments = await this.blogsService.returnComments(this.id);
-    
+
     this.blog.comments = [];
     comments.forEach(comment => {
       const parentsArray = comment.parents;
-      if(comment.depth == 0) {
-        this.blog.comments.push(comment);
+      if (comment.depth == 0) {
+        //let index = this.getCommentIndex(this.blog.comments, comment);
+        this.blog.comments.push(comment)
       }
-      else{
+      else {
         let parentComment: Comment | undefined;
         let coms: any = this.blog.comments;
-        for(let i = 0; i < parentsArray.length; i++) {
+        for (let i = 0; i < parentsArray.length; i++) {
           parentComment = coms.find((c: any) => c.id === parentsArray[i])
           coms = parentComment?.comments
         }
-        parentComment?.comments.push(comment);
+        if (parentComment) {
+          //let index = this.getCommentIndex(parentComment.comments, comment)
+          parentComment.comments.push(comment);
+        }
       }
     });
-    
-  }
 
-  
+
+  }
+  /*
+  getCommentIndex(comments: Comment[], comment: Comment) {
+    let j = 0;
+    while (j < comments.length && comments[j].likesUsers.size -
+      comments[j].dislikesUsers.size > comment.likesUsers.size - comment.dislikesUsers.size) {
+      j++;
+    }
+    return j;
+  }*/
 
   async onDeleteBlog() {
     this.APIservice.deleteBlog(this.blog.id).then(res => {
       this.blogsService.deleteBlog(this.blog);
       this.router.navigate(["/blogs"]);
     });
-    
+
   }
 
   async onSubmitComment() {
@@ -96,8 +108,8 @@ export class BlogDetailsComponent implements OnInit, OnDestroy {
         this.blog.comments.push(c);
         this.comment = "";
       })
-      
-      
+
+
     }
 
   }
